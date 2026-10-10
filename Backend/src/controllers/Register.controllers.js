@@ -2,20 +2,35 @@ import jwt from "jsonwebtoken"
 import UserModel from "../models/user.models.js"
 import config from "../Config/config.js"
 
-// const generateToken = (user)=>{
-// return jwt.sign({
-//     id:user._id,
-//     Email:Email.user
+const generateToken = async (user, res,message) => {
 
-//     },config.JWT_SECRET,{expiresIn:"7d"})
-// }
+    const tokens = jwt.sign({
+        id: user._id,
+
+    }, config.JWT, { expiresIn: "7d" })
+
+    res.cookie("token", tokens)
+
+    res.status(200).json({
+        message,
+        success: true,
+        user: {
+            user: user._id,
+            fullname: user.fullname,
+            Email: user.Email,
+            contact: user.contact
+        }
+    })
+        console.log("JWT_SECRET:", config.JWT)
+
+}
 
 
 export async function register(req, res) {
 
     try {
 
-        const { name, Email, password, contact } = req.body
+        const { fullname, Email, password, contact,isSeller } = req.body
 
         const userExist = await UserModel.find({
             $or: [
@@ -31,23 +46,26 @@ export async function register(req, res) {
         }
 
         const user = await UserModel.create({
-            name, Email, password, contact
+            fullname, Email, password, contact,role:isSeller?"seller":"buyer"
         })
 
-        const token = jwt.sign({
-            id: user._id,
-            Email: user.Email
-        }, config.JWT)
+        // const token = jwt.sign({
+        //     id: user._id,
+        //     Email: user.Email
+        // }, config.JWT)
 
-        // const token = generateToken(user)
 
-        res.cookie("token", token)
 
-        res.status(200).json({
-            message: "user is register successfully",
-            user,
-            token
-        })
+        // res.cookie("token", token)
+
+        // res.status(200).json({
+        //     message: "user is register successfully",
+        //     user,
+        //     token
+        // })
+
+        await generateToken(user,res, "user is register successfully")
+
     } catch (error) {
         console.log(error)
     }
