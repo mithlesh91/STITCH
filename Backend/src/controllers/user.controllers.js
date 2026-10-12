@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import UserModel from "../models/user.models.js"
 import config from "../Config/config.js"
-
+import bcrypt from "bcrypt"
 const generateToken = async (user, res,message) => {
 
     const tokens = jwt.sign({
@@ -27,21 +27,17 @@ const generateToken = async (user, res,message) => {
 
 
 export async function register(req, res) {
-
     try {
-
         const { fullname, Email, password, contact,isSeller } = req.body
-
-        const userExist = await UserModel.find({
+        const userExist = await UserModel.findOne({
             $or: [
                 { Email },
                 { contact }
             ]
         })
-        if (!userExist) {
-            console.log("Email or contact already exists");
-            return res.status(401).json({
-                message: "user is alrady exits"
+        if (userExist.length > 0) {
+            return res.status(409).json({
+                message: "Email or contact already exists"
             })
         }
 
@@ -67,7 +63,30 @@ export async function register(req, res) {
         await generateToken(user,res, "user is register successfully")
 
     } catch (error) {
-        console.log(error)
+        console.error("Registration failed:", error)
+        return res.status(500).json({
+            message: "Registration failed. Please try again."
+        })
     }
+
+}
+
+export async function login (req,res){
+    const {Email,contact,password} = req.body
+
+    const user = await UserModel.findOne({
+        $or:[
+            {Email},
+            {contact}
+        ]
+    })
+
+    const ismatch = await user.comparePassword(password)
+    if(!ismatch){
+        return res.status(401).json({
+            message:"email and password incorrect"
+        })
+    }
+    await generateToken(user,res ,"user is logined successfully")
 
 }

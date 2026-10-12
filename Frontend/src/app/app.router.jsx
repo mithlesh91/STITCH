@@ -5,7 +5,7 @@ export const router = createBrowserRouter([
 
   {
     path: "/",
-    element: <h1>welcome of app</h1>
+    element: <p>hello snitch</p>
   },
   {
     path: "/register",

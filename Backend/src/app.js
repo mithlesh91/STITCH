@@ -2,7 +2,7 @@ import express from "express"
 import cookieParser from "cookie-parser"
 import morgan from "morgan"
 import cors from "cors"
-import RegisterRouter from "./routers/register.router.js"
+import userRouter from "./routers/user.router.js"
 
 const app = express()
 app.use(express.json())
@@ -13,6 +13,7 @@ app.use(cors({
     credentials:true
 }))
 
-app.use("/api",RegisterRouter)
+app.use("/api",userRouter)
+
 
 export default app

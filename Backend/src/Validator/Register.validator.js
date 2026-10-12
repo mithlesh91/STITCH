@@ -19,3 +19,11 @@ export const Rvalidation = ([
     validation
 
 ])
+
+export const loginvalidate = ([
+    body("Email").isEmail().withMessage("email is must required"),
+    body("password").trim().isLength({ min: 6, max: 12 }).withMessage("password is must required"),
+    body("contact").trim().matches(/^[6-9]\d{9}$/).withMessage("Enter a valid 10-digit Indian mobile number"),
+    validation
+
+])
