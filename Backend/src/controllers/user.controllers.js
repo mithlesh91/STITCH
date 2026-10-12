@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import UserModel from "../models/user.models.js"
 import config from "../Config/config.js"
-import bcrypt from "bcrypt"
+
 const generateToken = async (user, res,message) => {
 
     const tokens = jwt.sign({
@@ -80,6 +80,12 @@ export async function login (req,res){
             {contact}
         ]
     })
+
+    if (!user) {
+        return res.status(401).json({
+            message:"email and password incorrect"
+        })
+    }
 
     const ismatch = await user.comparePassword(password)
     if(!ismatch){

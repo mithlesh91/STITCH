@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-
-import { AuthHook } from '../Hook/Auth.user.js';
-import { useNavigate } from 'react-router';
-
+import { AuthHook } from "../Hook/Auth.user"
+import { useNavigate,Link } from 'react-router';
 const Register = () => {
-
-  const {registeruser} = AuthHook()
-
-  const navigate = useNavigate();
   // Pure local state - No backend or Redux connection
+  const { registeruser } = AuthHook();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     fullname: '',
     email: '',
@@ -39,22 +36,19 @@ const Register = () => {
   // Form Submit (Pure Frontend)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Registration Submitted:', formData);
-    alert(`Account created successfully as ${formData.role === 'buyer' ? 'Buyer' : 'Seller'}!`);
-     await registeruser({
+    await registeruser({
       fullname: formData.fullname,
       Email: formData.email,
       password: formData.password,
       contact: formData.contactnumber,
       isSeller: formData.role === 'seller'
-     })
-     
-     navigate("/")
+    })
+    navigate("/login");
   };
 
   return (
     <div className="relative min-h-screen w-full flex flex-col justify-between items-center p-4 sm:p-6 antialiased font-sans text-neutral-900 selection:bg-neutral-950 selection:text-white">
-      
+
       {/* 1. New Cinematic Clothing Brand Campaign Background */}
       <div className="fixed inset-0 z-0">
         <img
@@ -76,7 +70,7 @@ const Register = () => {
             ATELIER 2026
           </span>
         </div>
-        
+
         <div className="text-[11px] uppercase tracking-widest text-neutral-200 bg-black/40 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/15 flex items-center gap-2 shadow-sm">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
           Streetwear Capsule
@@ -86,7 +80,7 @@ const Register = () => {
       {/* 3. Centered Clean Google Stitch Form Card */}
       <main className="relative z-10 my-auto w-full max-w-[430px]">
         <div className="w-full bg-white/95 backdrop-blur-xl rounded-3xl border border-white/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.35)] p-7 sm:p-9 transition-all">
-          
+
           {/* Brand & Heading */}
           <div className="text-center mb-6">
             <span className="inline-block text-xs font-black tracking-[0.3em] uppercase text-neutral-950 font-['Plus_Jakarta_Sans',sans-serif] px-3 py-1 bg-neutral-100 rounded-full mb-2">
@@ -106,16 +100,15 @@ const Register = () => {
               Account Role
             </label>
             <div className="grid grid-cols-2 gap-2 p-1.5 bg-neutral-100/90 rounded-2xl border border-neutral-200/80">
-              
+
               {/* Buyer Option (Default) */}
               <button
                 type="button"
                 onClick={() => handleRoleSelect('buyer')}
-                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${
-                  formData.role === 'buyer'
-                    ? 'bg-neutral-950 text-white shadow-md font-bold'
-                    : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
-                }`}
+                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${formData.role === 'buyer'
+                  ? 'bg-neutral-950 text-white shadow-md font-bold'
+                  : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
+                  }`}
               >
                 <span className={`w-2 h-2 rounded-full transition-colors ${formData.role === 'buyer' ? 'bg-emerald-400' : 'bg-neutral-400'}`} />
                 <span>Buyer</span>
@@ -128,11 +121,10 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => handleRoleSelect('seller')}
-                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${
-                  formData.role === 'seller'
-                    ? 'bg-neutral-950 text-white shadow-md font-bold'
-                    : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
-                }`}
+                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${formData.role === 'seller'
+                  ? 'bg-neutral-950 text-white shadow-md font-bold'
+                  : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
+                  }`}
               >
                 <span className={`w-2 h-2 rounded-full transition-colors ${formData.role === 'seller' ? 'bg-emerald-400' : 'bg-neutral-400'}`} />
                 <span>Seller</span>
@@ -143,7 +135,7 @@ const Register = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
-            
+
             {/* Full Name - Elevated Input Container */}
             <div>
               <label
@@ -283,9 +275,9 @@ const Register = () => {
           {/* Footer Link */}
           <div className="mt-6 pt-5 border-t border-neutral-100 text-center text-xs text-neutral-500">
             Already have an account?{' '}
-            <a href="#login" className="font-semibold text-neutral-950 hover:underline">
+            <Link to="/login" className="font-semibold text-neutral-950 hover:underline">
               Sign in
-            </a>
+            </Link>
           </div>
 
         </div>

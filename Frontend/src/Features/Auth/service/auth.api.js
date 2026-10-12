@@ -5,7 +5,22 @@ const authapi = axios.create({
     withCredentials: true
 })
 
-export default async function register(fullname, Email, password, contact, isSeller) {
-    const response = await authapi.post("/register", { fullname, Email, password, contact, isSeller })
-    return response.data
+export async function register(fullname, Email, password, contact, isSeller) {
+    try {
+        const response = await authapi.post("/register", { fullname, Email, password, contact, isSeller })
+        return response.data
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
+}
+
+export async function login(Email, contact, password) {
+    try {
+        const response = await authapi.post("/login", { Email, contact, password })
+        return response.data
+    } catch (error) {
+        console.log(error)
+        throw error;
+    }
 }
