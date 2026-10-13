@@ -127,11 +127,10 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => handleMethodSelect('email')}
-                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${
-                  loginMethod === 'email'
-                    ? 'bg-neutral-950 text-white shadow-md font-bold'
-                    : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
-                }`}
+                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${loginMethod === 'email'
+                  ? 'bg-neutral-950 text-white shadow-md font-bold'
+                  : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
+                  }`}
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -143,11 +142,10 @@ const Login = () => {
               <button
                 type="button"
                 onClick={() => handleMethodSelect('contact')}
-                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${
-                  loginMethod === 'contact'
-                    ? 'bg-neutral-950 text-white shadow-md font-bold'
-                    : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
-                }`}
+                className={`py-2.5 px-3 text-xs font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer ${loginMethod === 'contact'
+                  ? 'bg-neutral-950 text-white shadow-md font-bold'
+                  : 'text-neutral-600 hover:text-neutral-950 hover:bg-neutral-200/50'
+                  }`}
               >
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -280,6 +278,11 @@ const Login = () => {
                 </span>
               </label>
             </div>
+
+
+            <a href="/api/auth/google">
+              Continue with Google
+            </a>
 
             {/* Submit Button */}
             <div className="pt-2">

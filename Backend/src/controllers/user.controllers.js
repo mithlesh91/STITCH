@@ -96,3 +96,9 @@ export async function login (req,res){
     await generateToken(user,res ,"user is logined successfully")
 
 }
+
+export async function googleAuth(req,res) {
+
+    console.log(req.user)
+    res.redirect("http://localhost:5173/")
+}
