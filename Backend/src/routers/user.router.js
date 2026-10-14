@@ -2,6 +2,7 @@ import  { Router } from "express"
 import passport from "passport"
 import { register,login,googleAuth } from "../controllers/user.controllers.js"
 import { Rvalidation,LoginValidation } from "../Validator/Register.validator.js"
+import { config } from "dotenv"
 
 const userRouter = Router()
 
@@ -13,7 +14,7 @@ userRouter.get('/auth/google',
 );
 
 userRouter.get('/auth/google/callback',passport.authenticate('google',
-    { session: false }
+    { session: false,failureRedirect:config.NODE_ENV == "devlopment" ? "http://localhost:5173/login":"/login" }
 ), googleAuth)
 
 export default userRouter

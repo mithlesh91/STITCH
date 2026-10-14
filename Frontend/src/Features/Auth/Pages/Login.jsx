@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router';
 import { AuthHook } from '../Hook/Auth.user';
+import Continuewithgoogle from '../../components/Continuewithgoogle';
 
 const Login = () => {
   const { loginuser } = AuthHook();
@@ -279,11 +280,6 @@ const Login = () => {
               </label>
             </div>
 
-
-            <a href="/api/auth/google">
-              Continue with Google
-            </a>
-
             {/* Submit Button */}
             <div className="pt-2">
               <button
@@ -306,6 +302,7 @@ const Login = () => {
                 )}
               </button>
             </div>
+            <Continuewithgoogle/>
           </form>
 
           {/* Footer Link to Register */}

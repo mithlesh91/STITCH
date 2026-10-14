@@ -18,24 +18,18 @@ app.use(cors({
 
 app.use(passport.initialize())
 passport.use(new GoogleStrategy({
-    clientID: config.CLINTID,
-    clientSecret: config.SECRET,
-    callbackURL: '/api/auth/google/callback',
+    clientID: config. GOOGLE_CLIENT_ID,
+    clientSecret: config.GOOGLE_CLIENT_SECRET,
+    callbackURL: "/api/auth/google/callback"
 
 }, (accessToken, refreshToken, profile, done) => {
     return done(null, profile)
 
 })),
-
-    console.log("Google OAuth configuration:", {
-        clientIDLoaded: Boolean(config.CLINTID),
-        clientSecretLoaded: Boolean(config.SECRET),
-        clientIDFormatValid:
-            typeof config.CLINTID === "string" &&
-            config.CLINTID.endsWith(".apps.googleusercontent.com"),
-    });
-
-
+console.log({
+  clientIDLoaded: !!process.env.GOOGLE_CLINT_ID,
+  clientSecretLoaded: !!process.env.GOOGLE_CLINT_SECRET
+});
 app.use("/api", userRouter)
 
 

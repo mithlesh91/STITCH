@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken"
 import UserModel from "../models/user.models.js"
 import config from "../Config/config.js"
 
-const generateToken = async (user, res,message) => {
+const generateToken = async (user, res, message) => {
 
     const tokens = jwt.sign({
         id: user._id,
@@ -21,14 +21,12 @@ const generateToken = async (user, res,message) => {
             contact: user.contact
         }
     })
-        console.log("JWT_SECRET:", config.JWT)
-
 }
 
 
 export async function register(req, res) {
     try {
-        const { fullname, Email, password, contact,isSeller } = req.body
+        const { fullname, Email, password, contact, isSeller } = req.body
         const userExist = await UserModel.findOne({
             $or: [
                 { Email },
@@ -42,7 +40,7 @@ export async function register(req, res) {
         }
 
         const user = await UserModel.create({
-            fullname, Email, password, contact,role:isSeller?"seller":"buyer"
+            fullname, Email, password, contact, role: isSeller ? "seller" : "buyer"
         })
 
         // const token = jwt.sign({
@@ -60,7 +58,7 @@ export async function register(req, res) {
         //     token
         // })
 
-        await generateToken(user,res, "user is register successfully")
+        await generateToken(user, res, "user is register successfully")
 
     } catch (error) {
         console.error("Registration failed:", error)
@@ -71,34 +69,56 @@ export async function register(req, res) {
 
 }
 
-export async function login (req,res){
-    const {Email,contact,password} = req.body
+export async function login(req, res) {
+    const { Email, contact, password } = req.body
 
     const user = await UserModel.findOne({
-        $or:[
-            {Email},
-            {contact}
+        $or: [
+            { Email },
+            { contact }
         ]
     })
 
     if (!user) {
         return res.status(401).json({
-            message:"email and password incorrect"
+            message: "email and password incorrect"
         })
     }
 
     const ismatch = await user.comparePassword(password)
-    if(!ismatch){
+    if (!ismatch) {
         return res.status(401).json({
-            message:"email and password incorrect"
+            message: "email and password incorrect"
         })
     }
-    await generateToken(user,res ,"user is logined successfully")
+    await generateToken(user, res, "user is logined successfully")
 
 }
 
-export async function googleAuth(req,res) {
+export async function googleAuth(req, res) {
+    const { emails, displayName, id } = req.user
+    const email = emails?.[0]?.value
 
-    console.log(req.user)
+    if (!email) {
+        return res.status(400).json({
+            message: "Google account did not provide an email address"
+        })
+    }
+
+    let user = await UserModel.findOne({
+        $or: [{ Email: email }, { googleId: id }]
+    })
+
+    if (!user) {
+        user = await UserModel.create({
+            Email: email,
+            googleId: id,
+            fullname: displayName
+        })
+    }
+
+    const token = jwt.sign({ id: user._id }, config.JWT, { expiresIn: "7d" })
+    res.cookie("token", token)
+
     res.redirect("http://localhost:5173/")
 }
