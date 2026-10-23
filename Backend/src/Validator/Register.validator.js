@@ -55,3 +55,16 @@ export const LoginValidation = [
 
     validation
 ];
+
+
+export const productvalidation = [
+    body("title")
+        .notEmpty()
+        .withMessage("Enter the title"),
+
+    body("discription")
+        .notEmpty()
+        .withMessage("Enter the description"),
+
+    validation
+];

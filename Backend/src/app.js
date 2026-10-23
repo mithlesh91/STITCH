@@ -6,6 +6,7 @@ import passport from "passport"
 import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 import config from "./Config/config.js"
 import userRouter from "./routers/user.router.js"
+import productRouter from "./routers/product.router.js"
 
 const app = express()
 app.use(express.json())
@@ -31,6 +32,7 @@ console.log({
   clientSecretLoaded: !!process.env.GOOGLE_CLINT_SECRET
 });
 app.use("/api", userRouter)
+app.use("/api",productRouter)
 
 
 export default app

@@ -33,7 +33,7 @@ export async function register(req, res) {
                 { contact }
             ]
         })
-        if (userExist.length > 0) {
+        if (userExist) {
             return res.status(409).json({
                 message: "Email or contact already exists"
             })
@@ -96,6 +96,7 @@ export async function login(req, res) {
 }
 
 export async function googleAuth(req, res) {
+    console.log(req.user)
     const { emails, displayName, id } = req.user
     const email = emails?.[0]?.value
 

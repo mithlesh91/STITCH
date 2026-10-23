@@ -19,12 +19,18 @@ if (!process.env.GOOGLE_CLINT_SECRET) {
     throw new Error("Google client secret is missing in your .env file")
 }
 
+if(!process.env.IMAGE_PRIVATE_KEY){
+    throw new Error ("Image private key is missing in env file")
+}
+
+
 const config = Object.freeze({
     URI: process.env.MONGO_URI,
     JWT: process.env.JWT_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLINT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLINT_SECRET,
-    NODE_ENV:process.env.NODE_ENV == "devlopment"
+    NODE_ENV:process.env.NODE_ENV == "devlopment",
+    PRIVATE_KEY :process.env.IMAGE_PRIVATE_KEY
 });
 
 export default config;
