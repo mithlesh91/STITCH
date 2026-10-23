@@ -7,6 +7,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20"
 import config from "./Config/config.js"
 import userRouter from "./routers/user.router.js"
 import productRouter from "./routers/product.router.js"
+import getRouter from "./routers/get.router.js"
 
 const app = express()
 app.use(express.json())
@@ -31,8 +32,11 @@ console.log({
   clientIDLoaded: !!process.env.GOOGLE_CLINT_ID,
   clientSecretLoaded: !!process.env.GOOGLE_CLINT_SECRET
 });
+
+// Prepix
 app.use("/api", userRouter)
 app.use("/api",productRouter)
+app.use("/api",getRouter)
 
 
 export default app
