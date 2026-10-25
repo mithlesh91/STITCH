@@ -39,7 +39,7 @@ userSchema.pre("save",async function () {
 
     // hash password
 
-    this.password = await bcrypt.hash(this.password,10)
+    this.password = await bcrypt.hash(this.password, 10)
     
 });
 

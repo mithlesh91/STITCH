@@ -1,7 +1,7 @@
-import axios, { create } from "axios"
+import axios from "axios"
 
 const productApi = axios.create({
-    baseURL: "/api "
+    baseURL: "/api"
 })
 
 export async function createProduct(formdata) {
@@ -9,7 +9,7 @@ export async function createProduct(formdata) {
         const response = await productApi.post('/product', formdata)
         return response
     } catch (error) {
-     console.log(error)
+        console.log(error)
     }
 
 }

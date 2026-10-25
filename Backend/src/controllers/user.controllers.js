@@ -85,6 +85,11 @@ export async function login(req, res) {
         })
     }
 
+
+    console.log("Password received:", Boolean(password))
+    console.log("Stored password exists:", Boolean(user.password))
+  
+    
     const ismatch = await user.comparePassword(password)
     if (!ismatch) {
         return res.status(401).json({

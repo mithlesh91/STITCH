@@ -5,7 +5,12 @@ import UserModel from "../models/user.models.js";
 
 export async function identifyuser(req, res, next) {
     try {
-        const token = req.cookies?.token;
+
+        console.log("Protected URL:", req.originalUrl);
+        console.log("Cookies:", req.cookies);
+        console.log("Token:", req.cookies?.token);
+
+        const token = req.cookies.token;
 
         if (!token) {
             return res.status(401).json({

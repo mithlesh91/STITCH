@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { AuthHook } from "../Hook/Auth.user"
 import { useNavigate, Link } from 'react-router';
-import Continuewithgoogle from '../../components/Continuewithgoogle';
 const Register = () => {
   // Pure local state - No backend or Redux connection
   const { registeruser } = AuthHook();
@@ -260,7 +259,7 @@ const Register = () => {
                 </button>
               </div>
             </div>
-            
+
             {/* Submit Button */}
             <div className="pt-2">
               <button
@@ -269,7 +268,6 @@ const Register = () => {
               >
                 Register as {formData.role === 'seller' ? 'Seller' : 'Buyer'}
               </button>
-              <Continuewithgoogle/>
             </div>
 
           </form>

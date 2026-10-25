@@ -6,14 +6,23 @@ export const useProduct = () => {
     const dispatch = useDispatch()
 
     async function handlecreateproduct(formdata) {
-        const data = await createProduct(formdata)
-        return data.product
+        try {
+            const data = await createProduct(formdata)
+            return data?.product
+        } catch (error) {
+            console.error("Failed to create product:", error?.response?.data || error.message)
+        }
     }
 
     async function handlegetallproduct() {
-        const data = getallprocduct()
-        dispatch(setproduct(data.products))
+        try {
+            const data = await getallprocduct()
+            dispatch(setproduct(data?.products))
+        } catch (error) {
+            console.error("Failed to fetch products:", error?.response?.data || error.message)
+        }
     }
+
     return {
         handlecreateproduct,
         handlegetallproduct
